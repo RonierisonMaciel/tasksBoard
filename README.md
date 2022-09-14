@@ -249,6 +249,8 @@ pip freeze
 ```
 Django==3.2
 ```
+<br>
+
 ### Criar um projeto Django
 
 1. Use o comandao *django-admin startproject* para criar um projeto no Django.
@@ -268,10 +270,192 @@ django-admin startapp
 ```bash
 python manage.py runserver
 ```
-
+<br>
+ 
 ### Configurar a aplicação Django para o Elastic Beanstalk
 
-1. ...
+1. Ative o ambiente virtual.
 
+```bash
+source .venv/bin/activate
+```
+
+2. Execute *pip freeze* e salve a saída em um arquivo chamado *requirements.txt*
+
+```bash
+pip freeze > requirements.txt
+```
+
+3. Crie um diretório chamado *.ebextensions*.
+
+```bash
+mkdir .ebextensions
+```
+- O Elastic Beanstalk usa o *requirements.txt* para determinar que pacote instalar nas instâncias do EC2 que executam a aplicação.
+
+4. No diretório *.ebextensions*, adicione um arquivo de configuração chamado *django.config* com o texto a seguir. Exemplo *~/App/.ebextensions/django.config*
+
+```bash
+option_settings:
+  aws:elasticbeanstalk:application:environment:
+    DJANGO_SETTINGS_MODULE: "config.settings"
+    PYTHONPATH: "/var/app/current:$PYTHONPATH"
+  aws:elasticbeanstalk:container:python:
+    WSGIPath: "config.wsgi:application"
+```
+- Essa configuração, *WSGIPath*, especifica o local do script *WSGI* que o Elastic Beanstalk usa para iniciar a aplicação.
+
+5. Use o comando *deactivate* para desativar o ambiente virtual.
+
+```bash
+deactivate
+```
+- Reative o ambiente virtual sempre que for necessário adicionar pacotes ao aplicativo ou executá-lo localmente.
+ 
+<br>
+
+### Implantar o site com a CLI do EB
+
+1. Inicialize o repositório da *EB CLI* com o comando *eb init*:
+
+```bash
+eb init -p python-3.7 taskboard-repo
+```
+- Esse comando cria um aplicativo chamado *taskboard-repo*. Ele também configura o seu repositório local para criar ambientes com a versão mais recente da plataforma *Python 3.7*.
+
+
+2. Crie um ambiente e implante o aplicativo nele com eb create.
+
+```bash
+eb create taskboard-env
+```
+- Esse comando cria um ambiente do Elastic Beanstalk com carga balanceada chamado taskboard-env. A criação do ambiente leva cerca de 5 minutos. Como o Elastic Beanstalk cria os recursos necessários para executar a aplicação, ele gera mensagens informativas que a CLI do EB transmite ao terminal.
+ 
+3. Quando o processo de criação do ambiente for concluído, localize o nome de domínio do seu novo ambiente executando eb status.
+
+```bash
+eb status
+```
+- Seu nome de domínio do ambiente é o valor da propriedade CNAME.
+
+4. Abra o arquivo *settings.py* no diretório config. Localize a configuração *ALLOWED_HOSTS* e adicione o nome de domínio do aplicativo que você encontrou na etapa anterior ao valor da configuração. Se você não encontrar essa configuração no arquivo, adicione-a em uma nova linha.
+
+```bash
+ALLOWED_HOSTS = ['tasboard-env.elasticbeanstalk.com']
+```
+
+5. Salve o arquivo e, em seguida, implante o aplicativo executando *eb deploy*. Quando você executa eb deploy, a EB CLI empacota o conteúdo do diretório do projeto e implanta-o em seu ambiente.
+
+```bash
+eb deploy
+```
+
+6. Quando o processo de atualização do ambiente for concluído, abra o site com *eb open* no terminal.
+
+```bash
+eb open
+```
+
+7. Abra o console do Elastic Beanstalk no browser com *eb console* no terminal.
+
+```bash
+eb console
+```
+
+8. Para visualizar o log, execute o comando *eb logs* no terminal.
+
+```bash
+eb logs
+```
+
+9. Em caso de dúvidas, execute o comando *eb --help* no terminal.
+
+```bash
+eb --help
+```
+
+<br>
+
+### Atualizar seu aplicativo
+
+1. Modifique a configuração *TIME_ZONE* em settings.py. Exemplo ~/config/settings.py
+
+```bash
+LANGUAGE_CODE = "pt-br"
+TIME_ZONE = "America/Recife"
+USE_I18N = True
+USE_TZ = True
+```
+
+2. Implante a aplicação no ambiente do Elastic Beanstalk.
+
+```bash
+eb deploy
+```
+<br>
+
+### Criar um administrador de site
+
+1. Ative seu ambiente virtual *.venv*
+
+```bash
+source .venv/bin/activate
+```
+
+2. Inicialize o banco de dados local do aplicativo Django.
+
+```bash
+python manage.py migrate
+```
+
+3. Execute *manage.py createsuperuser* para criar um administrador.
+
+```bash
+python manage.py createsuperuser
+```
+
+4. Para informar ao Django onde armazenar os arquivos estáticos, defina *STATIC_ROOT* em settings.py. Exemplo ~/App/config/settings.py
+
+```bash
+STATIC_ROOT = 'static'
+```
+
+5. Execute *manage.py collectstatic* para preencher o diretório static com os ativos estáticos (JavaScript, CSS e imagens) para o site de administração.
+
+```bash
+python manage.py collectstatic
+```
+
+6. Implante o aplicativo.
+
+```bash
+eb deploy
+```
+
+7. Exiba o console de administração abrindo o site em seu navegador, anexando */admin/* ao URL do site, como o seguinte:
+
+```bash
+http://taskboard-env.eba-98b6t7yt.us-west-2.elasticbeanstalk.com/admin/
+```
+
+8. Faça login com o nome de usuário e a senha que você configurou na etapa 3.
+
+<br>
+
+### Apagar o projeto
+
+1. Para economizar horas de instância e outros recursos da AWS entre as sessões de desenvolvimento, termine o ambiente do Elastic Beanstalk com eb terminate.
+
+```bash
+eb terminate taskboard-env
+```
+
+2. Se você já concluiu o aplicativo de exemplo, também pode remover a pasta do projeto.
+
+```bash
+rm -rf App
+```
+
+<br>
 
 </details>
