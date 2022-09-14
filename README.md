@@ -420,7 +420,7 @@ python manage.py createsuperuser
 STATIC_ROOT = 'static'
 ```
 
-5. Execute *manage.py collectstatic* para preencher o diretório static com os ativos estáticos (JavaScript, CSS e imagens) para o site de administração.
+5. Execute *manage.py collectstatic* para preencher o diretório static com os ativos estáticos (JavaScript, CSS e imagens) para o site de administração *(>> não vai funcionar <<)* vide tópico (9) e (10).
 
 ```bash
 python manage.py collectstatic
