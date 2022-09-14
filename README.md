@@ -440,6 +440,29 @@ http://taskboard-env.eba-98b6t7yt.us-west-2.elasticbeanstalk.com/admin/
 
 8. Faça login com o nome de usuário e a senha que você configurou na etapa 3.
 
+9. Teremos problemas com Admin em produção sem CSS, para solucionar instale o *whitenoise*
+
+```bash
+pip install whitenoise
+```
+
+10. Em seguida, adicione o *whitenoise* ao *MIDDLEWARE* no seu *settings.py* e por fim 
+
+```bash
+MIDDLEWARE = [
+    # ...
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # ...
+]
+```
+
+11. (Opcional) Caso queira armazenar em cache. Basta adicionar ao seu *settings.py*
+
+```bash
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+```
+
 <br>
 
 ### Apagar o projeto
