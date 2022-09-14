@@ -211,3 +211,64 @@ python3 manage.py runserver
 17. Estilização usando bootstrap
 
 </details>
+
+## Deploy
+---
+
+<details>
+<summary>Passo a passo</summary>
+
+### Preparar o ambiente para fazer o deploy da aplicação
+
+1. Crie um ambiente virtual denominado *.venv*.
+
+```bash
+python3 -m venv .venv
+```
+
+2. Ative o ambiente virtual.
+
+```bash
+source .venv/bin/activate
+```
+
+3. Use *pip* para instalar o Django.
+
+```bash
+pip install django==3.2
+```
+
+4. Para verificiar se o Django está instalado, insira o seguinte.
+
+```bash
+pip freeze
+```
+```
+Django==3.2
+```
+### Criar um projeto Django
+
+1. Use o comandao *django-admin startproject* para criar um projeto no Django.
+
+```bash
+django-admin startproject config .
+```
+
+2. Use o comandao *django-admin startapp* para criar uma aplicação no Django.
+
+```bash
+django-admin startapp
+```
+
+3. Execute o site Django localmente com *manage.py runserver*.
+
+```bash
+python manage.py runserver
+```
+
+### Configurar a aplicação Django para o Elastic Beanstalk
+
+1. ...
+
+
+</details>
