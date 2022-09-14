@@ -1,0 +1,27 @@
+<div class="modal fade" id="editTask" tabindex="-1" role="dialog" aria-labelledby="editTaskLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editTaskLabel">Edit Task Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form name="editform" id="editform" action="{% url 'edit-task' %}" method="post">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="addInputStatus">Task Status:</label>
+                        <select class="form-control" id="addInputStatus" name="status" required>
+                            {% for value, property in status_list %}
+                            <option value="{{ value }}">{{ property }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Edit Task Status</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>

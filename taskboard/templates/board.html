@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{board.title}}
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container py-3">
+        <h1 class="title"> Tasks de {{ board.title }}</h1>
+        <div class="row g-3">
+            {% for task in pending_tasks %}
+            <div class="col-12 col-md-6 col-lg-4 py-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ task.title }}</h5>
+                        <p class="card-text">{{ task.description }}</p>
+                        <button type="button" class="btn btn-danger task" data-toggle="modal" data-target="#editTask"
+                            value="{{ task.id }}">{{ task.status }}</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container py-3">
+        <div class="row g-3 py-3">
+            {% for task in doing_tasks %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ task.title }}</h5>
+                        <p class="card-text">{{ task.description }}</p>
+                        <button type="button" class="btn btn-warning task" data-toggle="modal" data-target="#editTask"
+                            value="{{ task.id }}">{{ task.status }}</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container py-3">
+        <div class="row g-3 py-3">
+            {% for task in done_tasks %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card ">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ task.title }}</h5>
+                        <p class="card-text">{{ task.description }}</p>
+                        <button type="button" class="btn btn-success task" data-toggle="modal" data-target="#editTask"
+                            value="{{ task.id }}">{{ task.status }}</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container py-3">
+        <a href="{% url 'homepage' %}" class="btn btn-primary" role="button">Back to Boards</a>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newTask">
+            Add New Task
+        </button>
+    </div>
+
+    <script src="{% static 'js/getTaskId.js' %}"></script>
+</main>
+{% include "modals/new_task.html" %}
+{% include "modals/edit_status.html" %}
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+Taskboard Django App
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <h1 class="title"> Taskboard </h1>
+    {% for board in boards %}
+    <p>
+        <a href="{% url 'boardpage' board.id %}">{{ board }}</a>
+    </p>
+    {% endfor %}
+</div>
+
+
+<div class="container py-3">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newBoard">
+        Add New Board
+    </button>
+</div>
+
+{% include 'modals/new_board.html' %}
+
+{% endblock %}

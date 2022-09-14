@@ -1,0 +1,40 @@
+<div class="modal fade" id="newTask" tabindex="-1" role="dialog" aria-labelledby="newTaskLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newTaskLabel">New Task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{% url 'new-task' board.id %}" id="newform" method="post">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="board_id" value={{board.id}} required>
+                        <label for="addInputTitle">Task Title:</label>
+                        <input type="text" class="form-control" id="addInputTitle" name="title"
+                            placeholder="make an awesome app.." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addInputDescription">Task Description:</label>
+                        <input type="text" class="form-control" id="addInputDescription" name="description"
+                            placeholder="description..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addInputStatus">Task Status:</label>
+                        <select class="form-control" id="addInputStatus" name="status" required>
+                            {% for value, property in status_list %}
+                            <option value="{{ value }}">{{ property }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Add Task</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

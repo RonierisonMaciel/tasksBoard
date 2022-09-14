@@ -1,0 +1,25 @@
+<div class="modal fade" id="newBoard" tabindex="-1" role="dialog" aria-labelledby="newBoardLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newBoardLabel">New Board</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{% url 'new-board' %}" method="post">
+                <div class="body">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="addInputTitle">Board Title:</label>
+                        <input type="text" class="form-control" id="addInputTitle" name="title"
+                            placeholder="make an awesome app.." required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Add Board</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
