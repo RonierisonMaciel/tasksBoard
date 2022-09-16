@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
-    "taskboard5-env.eba-98b6t7yt.us-west-2.elasticbeanstalk.com",
+    "t16-env.eba-wyg7bcie.us-west-2.elasticbeanstalk.com",
 ]
 
 
