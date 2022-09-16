@@ -347,13 +347,13 @@ source .venv/bin/activate
 ```bash
 pip freeze > requirements.txt
 ```
-
+- O Elastic Beanstalk usa o *requirements.txt* para determinar que pacote instalar nas instâncias do EC2 que executam a aplicação.
+ 
 3. Crie um diretório chamado *.ebextensions*.
 
 ```bash
 mkdir .ebextensions
 ```
-- O Elastic Beanstalk usa o *requirements.txt* para determinar que pacote instalar nas instâncias do EC2 que executam a aplicação.
 
 4. No diretório *.ebextensions*, adicione um arquivo de configuração chamado *django.config* com o texto a seguir. Exemplo *~/App/.ebextensions/django.config*
 
@@ -367,7 +367,37 @@ option_settings:
 ```
 - Essa configuração, *WSGIPath*, especifica o local do script *WSGI* que o Elastic Beanstalk usa para iniciar a aplicação.
 
-5. Use o comando *deactivate* para desativar o ambiente virtual.
+5. Crie um arquivo *.ebignore*
+ 
+```bash
+touch .ebignore
+```
+- No arquivo .ebignore, adicone o que deverá ser ignorado no deploy.
+ 
+```bash
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+.env.dev
+.env.prod
+```
+ 
+7. Use o comando *deactivate* para desativar o ambiente virtual.
 
 ```bash
 deactivate
