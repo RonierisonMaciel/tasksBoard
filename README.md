@@ -221,7 +221,69 @@ python3 manage.py runserver
 <details>
 <summary>Passo a passo</summary>
 
-### Preparar o ambiente para fazer o deploy da aplicação
+## Preparar o ambiente para fazer o deploy da aplicação
+
+### Instalar a EB CLI
+
+1. Para instalar o *EB CLI*, execute o seguinte comando.
+
+```bash
+pip install awsebcli --upgrade --user
+```
+
+- A opção --upgrade informa ao pip para atualizar os requisitos que já estão instalados. A opção --user informa ao pip para instalar o programa em um subdiretório do diretório de usuário para evitar a modificação de bibliotecas usadas pelo seu sistema operacional.
+
+2. Adicione o caminho para o arquivo executável da sua variável PATH:
+- No Linux e macOS: 
+ - Linux: ~/.local/bin
+ - macOS: ~/Library/Python/3.7/bin
+- Para modificar a variável PATH (Linux, Unix ou macOS):
+ - Encontre o script de perfil do shell em sua pasta de usuário. Se você não tiver certeza de qual shell você tem, execute echo $SHELL.
+ ```bash
+ ls -a ~
+ ```
+ - Bash: .bash_profile, .profile ou .bash_login.
+ - Zsh: .zshrc
+ - Tcsh: .tcshrc, .cshrc ou .login.
+ 
+ 2.1 Adicione um comando de exportação ao script de perfil. O seguinte exemplo adiciona o caminho representado por *LOCAL_PATH* à variável PATH atual.
+ 
+ ```bash
+ export PATH=LOCAL_PATH:$PATH
+ ```
+
+2.2 Carregue o script de perfil descrito na primeira etapa para a sessão atual. O seguinte exemplo carrega o script de perfil representado por *PROFILE_SCRIPT*.
+
+```bash
+source ~/PROFILE_SCRIPT
+```
+
+2.3 No windows:
+ - 1. Python 3.7: %USERPROFILE%\AppData\Roaming\Python\Python37\Scripts Versões anteriores do Python: %USERPROFILE%\AppData\Roaming\Python\Scripts
+ - 2. Para modificar a variável PATH (Windows):
+ - 3. Pressione a tecla Windows e insira *environment variables*.
+ - 4. Escolha Edit environment variables for your account.
+ - 5. Selecione PATH e, em seguida, Edit (Editar).
+ - 6. Adicione caminhos ao campo Variable value, separados por ponto e vírgula. Por exemplo: *C:\item1\path;* *C:\item2\path*
+ - 7. Selecione OK duas vezes para aplicar as novas configurações.
+ - 8. Feche todas as janelas do prompt de comando em execução e abra novamente uma janela do prompt de comando.
+
+3. Verifique se a EB CLI foi instalada corretamente executando eb --version.
+
+```bash
+eb --version
+```
+
+4. Se você precisar desinstalar a EB CLI, use pip uninstall.
+
+```bash
+pip uninstall awsebcli
+```
+
+<br>
+
+### Implantar uma aplicação Django no Elastic Beanstalk
+
 
 1. Crie um ambiente virtual denominado *.venv*.
 
@@ -262,7 +324,7 @@ django-admin startproject config .
 2. Use o comandao *django-admin startapp* para criar uma aplicação no Django.
 
 ```bash
-django-admin startapp
+django-admin startapp taskboard
 ```
 
 3. Execute o site Django localmente com *manage.py runserver*.
