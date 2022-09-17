@@ -219,9 +219,7 @@ python3 manage.py runserver
 ---
 
 <details>
-<summary>Passo a passo</summary>
-
-## Preparar o ambiente para fazer o deploy da aplicação
+<summary>Preparar o ambiente para fazer o deploy da aplicação</summary>
 
 ### Instalar a EB CLI
 
@@ -282,8 +280,10 @@ pip uninstall awsebcli
 
 <br>
 
-### Implantar uma aplicação Django no Elastic Beanstalk
+</details>
 
+<details>
+<summary>Implantar uma aplicação Django no Elastic Beanstalk</summary>
 
 1. Crie um ambiente virtual denominado *.venv*.
 
@@ -333,8 +333,11 @@ django-admin startapp taskboard
 python manage.py runserver
 ```
 <br>
- 
-### Configurar a aplicação Django para o Elastic Beanstalk
+
+</details>
+
+<details>
+<summary>Configurar a aplicação Django para o Elastic Beanstalk</summary>
 
 1. Ative o ambiente virtual.
 
@@ -465,10 +468,12 @@ eb logs
 ```bash
 eb --help
 ```
-
 <br>
 
-### Atualizar seu aplicativo
+</details>
+
+<details>
+<summary>Atualizar seu aplicativo</summary>
 
 1. Modifique a configuração *TIME_ZONE* em settings.py. Exemplo ~/config/settings.py
 
