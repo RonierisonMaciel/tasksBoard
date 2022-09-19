@@ -283,7 +283,7 @@ pip uninstall awsebcli
 </details>
 
 <details>
-<summary>Implantar uma aplicação Django no Elastic Beanstalk</summary>
+<summary>Configurar a aplicação Django para o Elastic Beanstalk</summary>
 
 1. Crie um ambiente virtual denominado *.venv*.
 
@@ -337,7 +337,7 @@ python manage.py runserver
 </details>
 
 <details>
-<summary>Configurar a aplicação Django para o Elastic Beanstalk</summary>
+<summary>Implantar uma aplicação Django no Elastic Beanstalk</summary>
 
 1. Ative o ambiente virtual.
 
