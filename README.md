@@ -1,4 +1,4 @@
-# Deploying a Django application TaskBoard to Elastic Beanstalk
+# Deploying a Django application TasksBoard to Elastic Beanstalk
 
 <br>
 
